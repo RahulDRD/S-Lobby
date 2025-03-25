@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    .progress-bar {
+      transition: width 0.5s ease-in-out;
+    }
+    .translate-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+      background-color: #3b82f6;
+      color: white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    .translate-btn:hover {
+      transform: scale(1.1);
+      background-color: #2563eb;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 to-purple-50 flex justify-center items-center min-h-screen p-4">
+  <!-- Translate Button -->
+  <div class="translate-btn" id="translateBtn" title="Translate to Hindi">
+    <i class="fas fa-language text-xl"></i>
+  </div>
+
+  <div class="w-full max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
+    <!-- Progress indicator -->
+    <div class="h-2 bg-gray-200">
+      <div id="progress" class="h-full bg-gradient-to-r from-orange-400 to-pink-500 progress-bar" style="width: 33%"></div>
+    </div>
+    
+    <div class="p-6 flex justify-between items-center border-b border-gray-100">
+      <button onclick="prevPage()" class="flex items-center text-gray-600 hover:text-orange-500 transition-colors duration-300" id="prevBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg>
+        <span class="hindi-text" data-hindi="पिछला" data-english="Previous">Previous</span>
+      </button>
+      
+      <div class="flex space-x-2">
+        <div id="dot1" class="w-3 h-3 rounded-full bg-orange-500"></div>
+        <div id="dot2" class="w-3 h-3 rounded-full bg-gray-300"></div>
+        <div id="dot3" class="w-3 h-3 rounded-full bg-gray-300"></div>
+      </div>
+      
+      <button onclick="nextPage()" class="flex items-center text-gray-600 hover:text-orange-500 transition-colors duration-300" id="nextBtn">
+        <span class="hindi-text" data-hindi="अगला" data-english="Next">Next</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+    
+    <div class="p-6 relative overflow-hidden">
+      <div class="page active animate__animated animate__fadeIn" id="page1">
+        <div class="flex flex-col items-center">
+          <div class="w-64 h-64 bg-gradient-to-br from-orange-100 to-pink-100 rounded-2xl flex items-center justify-center mb-6 float-animation">
+            <img src="/page1.jpg" alt="Business" class="w-56 h-56 object-cover rounded-xl shadow-md">
+          </div>
+          <h2 class="text-2xl font-bold text-gray-800 mb-3 hindi-text" data-hindi="नवीन समाधान" data-english="Innovative Solutions">Innovative Solutions</h2>
+          <p class="text-gray-600 text-center leading-relaxed hindi-text" 
+             data-hindi="व्यवसाय में सफलता रणनीति, सहयोग और नवाचार से आती है। हर निर्णय भविष्य को आकार देता है, और हर विचार प्रभाव पैदा करने की क्षमता रखता है। सही उपकरण और मानसिकता के साथ, व्यवसाय उल्लेखनीय विकास प्राप्त कर सकते हैं।"
+             data-english="Success in business comes from strategy, collaboration, and innovation. Every decision shapes the future, and every idea has the potential to create an impact. With the right tools and mindset, businesses can achieve remarkable growth.">
+             Success in business comes from strategy, collaboration, and innovation. Every decision shapes the future, and every idea has the potential to create an impact. With the right tools and mindset, businesses can achieve remarkable growth.
+          </p>
+        </div>
+      </div>
+      
+      <div class="page hidden animate__animated animate__fadeIn" id="page2">
+        <div class="flex flex-col items-center">
+          <div class="w-64 h-64 bg-gradient-to-br from-green-100 to-teal-100 rounded-2xl flex items-center justify-center mb-6 float-animation">
+            <img src="page2.jpg" alt="Vocal for Local" class="w-56 h-56 object-cover rounded-xl shadow-md">
+          </div>
+          <h2 class="text-2xl font-bold text-gray-800 mb-3 hindi-text" data-hindi="स्थानीय के लिए मुखर" data-english="Vocal for Local">Vocal for Local</h2>
+          <p class="text-gray-600 text-center leading-relaxed hindi-text" 
+             data-hindi="स्थानीय व्यवसायों को सशक्त बनाएं, देशज प्रतिभा का समर्थन करें और हमारी अर्थव्यवस्था को मजबूत करें। जब हम स्थानीय चुनते हैं, तो हम समुदायों को उठाते हैं, अवसर पैदा करते हैं और हमारी विरासत को संरक्षित करते हैं। आइए परिवर्तन की आवाज बनें - स्थानीय के लिए मुखर!"
+             data-english="Empower local businesses, support homegrown talent, and strengthen our economy. When we choose local, we uplift communities, create opportunities, and preserve our heritage. Let's be the voice of change—Vocal for Local!">
+             Empower local businesses, support homegrown talent, and strengthen our economy. When we choose local, we uplift communities, create opportunities, and preserve our heritage. Let's be the voice of change—Vocal for Local!
+          </p>
+        </div>
+      </div>
+      
+      <div class="page hidden animate__animated animate__fadeIn" id="page3">
+        <div class="flex flex-col items-center">
+          <div class="w-64 h-64 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl flex items-center justify-center mb-6 float-animation">
+            <img src="page3.jpg" alt="Our App" class="w-56 h-56 object-cover rounded-xl shadow-md">
+          </div>
+          <h2 class="text-2xl font-bold text-gray-800 mb-3 hindi-text" data-hindi="हमारा अद्भुत ऐप" data-english="Our Amazing App">Our Amazing App</h2>
+          <p class="text-gray-600 text-center leading-relaxed hindi-text" 
+             data-hindi="स्लॉबी में आपका स्वागत है - एक सहज और आकर्षक अनुभव के लिए आपका प्लेटफॉर्म! 🚀 हमारा ऐप X और Y सुविधाएँ, व्यक्तिगत सिफारिशें और एक उपयोगकर्ता-अनुकूल इंटरफ़ेस प्रदान करता है। अपनी उंगलियों पर सुविधा का भविष्य अनुभव करें!"
+             data-english="Welcome to Slobby your Platform for a seamless and engaging experience! 🚀 Our app offers X and Y features, personalized recommendations, and a user-friendly interface. Experience the future of convenience at your fingertips!">
+             Welcome to Slobby your Platform for a seamless and engaging experience! 🚀 Our app offers X and Y features, personalized recommendations, and a user-friendly interface. Experience the future of convenience at your fingertips!
+          </p>
+          <button onclick="window.location.href='dashboard.html'" class="mt-6 px-6 py-2 bg-gradient-to-r from-orange-400 to-pink-500 text-white rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 hindi-text" 
+                  data-hindi="शुरू करें" data-english="Get Started">
+            Get Started
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    let currentPage = 1;
+    const totalPages = 3;
+    let isEnglish = true; // Default language is English
+    
+    function updateIndicators() {
+      // Update progress bar
+      document.getElementById('progress').style.width = `${(currentPage / totalPages) * 100}%`;
+      
+      // Update navigation dots
+      for (let i = 1; i <= totalPages; i++) {
+        const dot = document.getElementById(`dot${i}`);
+        if (i === currentPage) {
+          dot.classList.remove('bg-gray-300');
+          dot.classList.add('bg-orange-500');
+        } else {
+          dot.classList.remove('bg-orange-500');
+          dot.classList.add('bg-gray-300');
+        }
+      }
+      
+      // Update button visibility
+      document.getElementById('prevBtn').style.visibility = currentPage === 1 ? 'hidden' : 'visible';
+      document.getElementById('nextBtn').style.visibility = currentPage === totalPages ? 'hidden' : 'visible';
+      
+      // Change next button to "Get Started" on last page
+      if (currentPage === totalPages) {
+        document.getElementById('nextBtn').innerHTML = `
+          <span class="hindi-text" data-hindi="शुरू करें" data-english="Get Started">Get Started</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+          </svg>
+        `;
+      } else {
+        document.getElementById('nextBtn').innerHTML = `
+          <span class="hindi-text" data-hindi="अगला" data-english="Next">Next</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          </svg>
+        `;
+      }
+    }
+    
+    function showPage(page) {
+      document.querySelectorAll('.page').forEach((p, index) => {
+        p.classList.add('hidden');
+        if (index + 1 === page) {
+          p.classList.remove('hidden');
+          p.classList.add('animate__fadeIn');
+        }
+      });
+      currentPage = page;
+      updateIndicators();
+    }
+    
+    function nextPage() {
+      if (currentPage < totalPages) {
+        showPage(currentPage + 1);
+      } else {
+        // Action when "Get Started" is clicked
+        alert(isEnglish ? "Let's get started!" : "चलिए शुरू करते हैं!");
+      }
+    }
+    
+    function prevPage() {
+      if (currentPage > 1) {
+        showPage(currentPage - 1);
+      }
+    }
+    
+    // Translation functionality
+    const translateBtn = document.getElementById('translateBtn');
+    
+    translateBtn.addEventListener('click', () => {
+      const hindiElements = document.querySelectorAll('.hindi-text');
+      isEnglish = !isEnglish;
+      
+      hindiElements.forEach(element => {
+        const hindiText = element.getAttribute('data-hindi');
+        const englishText = element.getAttribute('data-english');
+        
+        if (element.innerHTML.includes('<') || element.innerHTML.includes('>')) {
+          // Handle HTML content
+          element.innerHTML = isEnglish ? englishText : hindiText;
+        } else {
+          // Handle plain text
+          element.textContent = isEnglish ? englishText : hindiText;
+        }
+      });
+      
+      // Update translate button tooltip
+      translateBtn.title = isEnglish ? "Translate to Hindi" : "अंग्रेजी में अनुवाद करें";
+      
+      // Update button icon to show translation status
+      translateBtn.innerHTML = isEnglish ? 
+        '<i class="fas fa-language text-xl"></i>' : 
+        '<i class="fas fa-check text-xl"></i>';
+      
+      // Reset icon after 2 seconds
+      setTimeout(() => {
+        if (!isEnglish) {
+          translateBtn.innerHTML = '<i class="fas fa-language text-xl"></i>';
+        }
+      }, 2000);
+    });
+    
+    // Add keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') nextPage();
+      if (e.key === 'ArrowLeft') prevPage();
+    });
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      showPage(currentPage);
+      updateIndicators();
+    });
+  </script>
+</body>
+</html>

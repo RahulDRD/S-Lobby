@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.8s ease;
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .settings-panel {
+            transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .settings-panel.active {
+            transform: translateX(0);
+        }
+        .translate-btn {
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .translate-btn:hover {
+            background-color: #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-purple-100 min-h-screen flex flex-col px-6 py-6">
+    
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6 bg-gradient-to-r from-[#2E3255] to-[#4A4F7A] p-4 rounded-xl shadow-lg">
+        <h1 class="text-xl font-bold text-white flex items-center hindi-text" data-hindi="प्रगति डैशबोर्ड" data-english="Progress Dashboard">
+            <i class="fas fa-chart-line mr-2"></i> प्रगति डैशबोर्ड
+        </h1>
+        <div class="flex items-center space-x-3">
+            <span class="text-white text-sm hidden sm:inline hindi-text" data-hindi="अंतिम अद्यतन: आज" data-english="Last updated: Today">अंतिम अद्यतन: आज</span>
+            <button class="p-2 bg-white/20 rounded-full hover:bg-white/30 transition">
+                <i class="fas fa-sync-alt text-white"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div id="settingsPanel" class="settings-panel fixed top-0 left-0 w-full sm:w-96 h-full bg-white shadow-2xl z-20 p-6 flex flex-col">
+        <div class="flex justify-between items-center mb-6 pb-3 border-b">
+            <h2 class="text-xl font-bold text-gray-800 hindi-text" data-hindi="सेटिंग्स" data-english="Settings">सेटिंग्स</h2>
+            <button id="closeSettings" class="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="space-y-4">
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-bell text-blue-600"></i>
+                    </div>
+                    <span class="hindi-text" data-hindi="नोटिफिकेशन" data-english="Notifications">नोटिफिकेशन</span>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" value="" class="sr-only peer" checked>
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+            </div>
+                
+            <button id="translateBtn" class="translate-btn flex items-center justify-center p-3">
+                <i class="fas fa-language mr-2"></i>
+                <span class="hindi-text" data-hindi="अंग्रेजी में अनुवाद करें" data-english="Translate to Hindi">अंग्रेजी में अनुवाद करें</span>
+            </button>
+            
+            <div class="pt-4 border-t mt-4">
+                <button class="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition duration-300 hindi-text"
+                        data-hindi="लॉग आउट" data-english="Log Out">लॉग आउट</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow space-y-6">
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Completion Rate -->
+            <div class="bg-white rounded-xl p-5 shadow-md transition-all duration-300 card-hover">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-gray-500 text-sm hindi-text" data-hindi="पूर्णता दर" data-english="Completion Rate">पूर्णता दर</p>
+                        <h3 class="text-2xl font-bold mt-1">78%</h3>
+                        <p class="text-green-500 text-sm mt-1 flex items-center hindi-text" data-hindi="<i class='fas fa-arrow-up mr-1'></i> पिछले सप्ताह से 12%" data-english="<i class='fas fa-arrow-up mr-1'></i> 12% from last week">
+                            <i class="fas fa-arrow-up mr-1"></i> पिछले सप्ताह से 12%
+                        </p>
+                    </div>
+                    <div class="w-14 h-14">
+                        <svg class="w-full h-full" viewBox="0 0 36 36">
+                            <path d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none" stroke="#e6e6e6" stroke-width="3"/>
+                            <path d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none" stroke="#4ade80" stroke-width="3" stroke-dasharray="78, 100"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tasks Completed -->
+            <div class="bg-white rounded-xl p-5 shadow-md transition-all duration-300 card-hover">
+                <div class="flex justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm hindi-text" data-hindi="पूर्ण हुए कार्य" data-english="Tasks Completed">पूर्ण हुए कार्य</p>
+                        <h3 class="text-2xl font-bold mt-1">23/30</h3>
+                        <p class="text-blue-500 text-sm mt-1 hindi-text" data-hindi="कल से +5" data-english="+5 from yesterday">कल से +5</p>
+                    </div>
+                    <div class="text-blue-500 text-3xl flex items-center">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Streak Days -->
+            <div class="bg-white rounded-xl p-5 shadow-md transition-all duration-300 card-hover">
+                <div class="flex justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm hindi-text" data-hindi="वर्तमान क्रम" data-english="Current Streak">वर्तमान क्रम</p>
+                        <h3 class="text-2xl font-bold mt-1 hindi-text" data-hindi="7 दिन" data-english="7 days">7 दिन</h3>
+                        <p class="text-purple-500 text-sm mt-1 hindi-text" data-hindi="जा रहा!" data-english="Going!">जा रहा!</p>
+                    </div>
+                    <div class="text-purple-500 text-3xl flex items-center">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Time Spent -->
+            <div class="bg-white rounded-xl p-5 shadow-md transition-all duration-300 card-hover">
+                <div class="flex justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm hindi-text" data-hindi="समय बिताया" data-english="Time Spent">समय बिताया</p>
+                        <h3 class="text-2xl font-bold mt-1 hindi-text" data-hindi="14.5h" data-english="14.5h">14.5h</h3>
+                        <p class="text-orange-500 text-sm mt-1 hindi-text" data-hindi="2.1 घंटे का दैनिक औसत" data-english="2.1h daily average">2.1 घंटे का दैनिक औसत</p>
+                    </div>
+                    <div class="text-orange-500 text-3xl flex items-center">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Weekly Completion Chart -->
+            <div class="bg-white p-5 rounded-xl shadow-md">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="font-semibold text-gray-700 hindi-text" data-hindi="साप्ताहिक प्रगति" data-english="Weekly Progress">साप्ताहिक प्रगति</h2>
+                    <select class="text-sm border rounded px-2 py-1 bg-gray-50 hindi-text" data-hindi="इस सप्ताह" data-english="This Week">
+                        <option class="hindi-text" data-hindi="इस सप्ताह" data-english="This Week">इस सप्ताह</option>
+                        <option class="hindi-text" data-hindi="पिछले सप्ताह" data-english="Last Week">पिछले सप्ताह</option>
+                        <option class="hindi-text" data-hindi="पिछला महीना" data-english="Last Month">पिछला महीना</option>
+                    </select>
+                </div>
+                <div class="h-64">
+                    <canvas id="weeklyChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Task Distribution Chart -->
+            <div class="bg-white p-5 rounded-xl shadow-md">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="font-semibold text-gray-700 hindi-text" data-hindi="कार्य श्रेणियाँ" data-english="Task Categories">कार्य श्रेणियाँ</h2>
+                    <div class="flex space-x-2">
+                        <button class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded hindi-text" data-hindi="सभी को देखें" data-english="View All">सभी को देखें</button>
+                    </div>
+                </div>
+                <div class="h-64">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="bg-white p-5 rounded-xl shadow-md">
+            <h2 class="font-semibold text-gray-700 mb-4 hindi-text" data-hindi="हाल की गतिविधि" data-english="Recent Activity">हाल की गतिविधि</h2>
+            <div class="space-y-4">
+                <div class="flex items-start">
+                    <div class="bg-green-100 p-2 rounded-full mr-3">
+                        <i class="fas fa-check text-green-600"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-sm font-medium hindi-text" data-hindi='"मार्केटिंग रणनीति अपडेट करें" पूरा हुआ"' data-english='"Update marketing strategy" completed'>"मार्केटिंग रणनीति अपडेट करें" पूरा हुआ"</p>
+                        <p class="text-xs text-gray-500 hindi-text" data-hindi="आज, 10:45 पूर्वाह्न" data-english="Today, 10:45 AM">आज, 10:45 पूर्वाह्न</p>
+                    </div>
+                    <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full hindi-text" data-hindi="पूर्ण" data-english="Completed">पूर्ण</span>
+                </div>
+                <div class="flex items-start">
+                    <div class="bg-purple-100 p-2 rounded-full mr-3">
+                        <i class="fas fa-edit text-purple-600"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-sm font-medium hindi-text" data-hindi="अद्यतन "वित्तीय रिपोर्ट" की समय-सीमा" data-english="Updated "Financial report" deadline">अद्यतन "वित्तीय रिपोर्ट" की समय-सीमा</p>
+                        <p class="text-xs text-gray-500 hindi-text" data-hindi="कल, 11:15 पूर्वाह्न" data-english="Yesterday, 11:15 AM">कल, 11:15 पूर्वाह्न</p>
+                    </div>
+                    <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full hindi-text" data-hindi="संशोधित" data-english="Updated">संशोधित</span>
+                </div>
+            </div>
+            <button class="w-full mt-4 text-center text-blue-500 text-sm font-medium py-2 hover:bg-blue-50 rounded-lg hindi-text" data-hindi="सभी गतिविधि देखें" data-english="View All Activity">
+                सभी गतिविधि देखें
+            </button>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <div class="flex justify-around py-4 bg-gradient-to-r from-[#2E3255] to-[#4A4F7A] rounded-t-2xl shadow-lg mt-6 text-white">
+        <button onclick="window.location.href='task.html'" class="nav-button font-semibold flex flex-col items-center transition-all duration-200">
+            <i class="fas fa-tasks text-xl mb-1"></i>
+            <span class="text-xs hindi-text" data-hindi="कार्य" data-english="Tasks">कार्य</span>
+        </button>
+        <button class="nav-button font-semibold flex flex-col items-center transition-all duration-200 text-blue-300">
+            <i class="fas fa-chart-line text-xl mb-1 animate-float"></i>
+            <span class="text-xs hindi-text" data-hindi="प्रगति" data-english="Progress">प्रगति</span>
+        </button>
+        <button id="settingsBtn" class="nav-button font-semibold flex flex-col items-center transition-all duration-200">
+            <i class="fas fa-cog text-xl mb-1"></i>
+            <span class="text-xs hindi-text" data-hindi="सेटिंग्स" data-english="Settings">सेटिंग्स</span>
+        </button>
+    </div>
+
+    <script>
+        let isEnglish = false;
+
+        // Weekly Progress Chart
+        const weeklyCtx = document.getElementById('weeklyChart').getContext('2d');
+        const weeklyChart = new Chart(weeklyCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Tasks Completed',
+                    data: [3, 5, 2, 4, 6, 1, 2],
+                    backgroundColor: [
+                        'rgba(99, 102, 241, 0.7)',
+                        'rgba(99, 102, 241, 0.7)',
+                        'rgba(99, 102, 241, 0.7)',
+                        'rgba(99, 102, 241, 0.7)',
+                        'rgba(99, 102, 241, 0.7)',
+                        'rgba(99, 102, 241, 0.7)',
+                        'rgba(99, 102, 241, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(99, 102, 241, 1)',
+                        'rgba(99, 102, 241, 1)',
+                        'rgba(99, 102, 241, 1)',
+                        'rgba(99, 102, 241, 1)',
+                        'rgba(99, 102, 241, 1)',
+                        'rgba(99, 102, 241, 1)',
+                        'rgba(99, 102, 241, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Task Category Chart
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        const categoryChart = new Chart(categoryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Research', 'Marketing', 'Finance', 'Team', 'Sales', 'Other'],
+                datasets: [{
+                    data: [15, 22, 18, 12, 20, 13],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(16, 185, 129, 0.7)',
+                        'rgba(245, 158, 11, 0.7)',
+                        'rgba(139, 92, 246, 0.7)',
+                        'rgba(239, 68, 68, 0.7)',
+                        'rgba(156, 163, 175, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(16, 185, 129, 1)',
+                        'rgba(245, 158, 11, 1)',
+                        'rgba(139, 92, 246, 1)',
+                        'rgba(239, 68, 68, 1)',
+                        'rgba(156, 163, 175, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    }
+                },
+                cutout: '65%'
+            }
+        });
+
+        // Settings functionality
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsPanel = document.getElementById('settingsPanel');
+        const closeSettings = document.getElementById('closeSettings');
+        
+        settingsBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            settingsPanel.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeSettings.addEventListener('click', () => {
+            settingsPanel.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Translation functionality
+        const translateBtn = document.getElementById('translateBtn');
+        
+        translateBtn.addEventListener('click', () => {
+            const hindiElements = document.querySelectorAll('.hindi-text');
+            isEnglish = !isEnglish;
+            
+            hindiElements.forEach(element => {
+                const hindiText = element.getAttribute('data-hindi');
+                const englishText = element.getAttribute('data-english');
+                
+                if (element.tagName === 'SELECT') {
+                    // Handle select options
+                    const options = element.querySelectorAll('option');
+                    options.forEach(option => {
+                        const optionHindi = option.getAttribute('data-hindi');
+                        const optionEnglish = option.getAttribute('data-english');
+                        option.textContent = isEnglish ? optionEnglish : optionHindi;
+                    });
+                } else if (element.innerHTML.includes('<') || element.innerHTML.includes('>')) {
+                    // Handle HTML content
+                    element.innerHTML = isEnglish ? englishText : hindiText;
+                } else {
+                    // Handle plain text
+                    element.textContent = isEnglish ? englishText : hindiText;
+                }
+            });
+            
+            // Update translate button text
+            const translateBtnText = translateBtn.querySelector('span');
+            translateBtnText.setAttribute('data-hindi', isEnglish ? "हिंदी में अनुवाद करें" : "अंग्रेजी में अनुवाद करें");
+            translateBtnText.setAttribute('data-english', isEnglish ? "Translate to Hindi" : "Translate to English");
+            translateBtnText.textContent = isEnglish ? "Translate to Hindi" : "अंग्रेजी में अनुवाद करें";
+        });
+    </script>
+</body>
+</html>

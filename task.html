@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .task-item:hover {
+            transform: translateY(-2px);
+        }
+        .progress-text {
+            transition: all 0.3s ease;
+        }
+        .nav-button:hover {
+            transform: scale(1.1);
+        }
+        .settings-panel {
+            transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .settings-panel.active {
+            transform: translateX(0);
+        }
+        .translate-btn {
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .translate-btn:hover {
+            background-color: #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-purple-100 min-h-screen flex flex-col px-6 py-6">
+    
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6 bg-gradient-to-r from-[#2E3255] to-[#4A4F7A] p-4 rounded-xl shadow-lg">
+        <h1 class="text-xl font-bold text-white flex items-center hindi-text" data-hindi="S Lobby" data-english="S Lobby">
+            <i class="fas fa-tasks mr-2"></i> S Lobby
+        </h1>
+        <button class="p-2 bg-white/20 rounded-full hover:bg-white/30 transition">
+            <i class="fas fa-bell text-white"></i>
+        </button>
+    </div>
+    
+    <!-- Subheading -->
+    <div class="text-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-1 hindi-text" data-hindi="व्यक्तिगत कार्य योजना" data-english="Personal Task Plan">व्यक्तिगत कार्य योजना</h2>
+        <p class="text-gray-600 hindi-text" data-hindi="Complete your tasks to achieve your goals" data-english="Complete your tasks to achieve your goals">Complete your tasks to achieve your goals</p>
+    </div>
+    
+    <!-- Progress Section -->
+    <div class="bg-white p-5 rounded-xl shadow-md mb-6 transition-all duration-300 hover:shadow-lg">
+        <div class="flex justify-between items-center mb-2">
+            <span class="text-sm font-medium text-gray-600 hindi-text" data-hindi="आपकी प्रगति" data-english="Your Progress">आपकी प्रगति</span>
+            <span id="progress-text" class="progress-text text-sm font-bold text-green-600 hindi-text" data-hindi="0% पूर्ण" data-english="0% Complete">0% पूर्ण</span>
+        </div>
+        <div class="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
+            <div class="bg-gradient-to-r from-green-400 to-green-600 h-full w-0 transition-all duration-500" id="progress-bar"></div>
+        </div>
+    </div>
+    
+    <!-- Task List -->
+    <div class="bg-white p-6 rounded-xl shadow-lg flex-grow">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold text-gray-700 flex items-center hindi-text" data-hindi="दैनिक/साप्ताहिक कार्य" data-english="Daily/Weekly Tasks">
+                <i class="fas fa-clipboard-list mr-2 text-blue-500"></i> दैनिक/साप्ताहिक कार्य
+            </h2>
+            <span id="task-count" class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded-full hindi-text" data-hindi="0/6 पूर्ण" data-english="0/6 Complete">0/6 पूर्ण</span>
+        </div>
+        
+        <ul id="task-list" class="space-y-3">
+            <li class="task-item flex items-center bg-gray-50 hover:bg-gray-100 p-4 rounded-lg shadow-sm border-l-4 border-blue-400 transition-all duration-200">
+                <input type="checkbox" class="mr-3 w-5 h-5 accent-green-500 cursor-pointer" onclick="updateProgress()">
+                <span class="text-gray-700 flex-grow hindi-text" data-hindi="प्रतिस्पर्धियों के बारे में शोध करें" data-english="Research about competitors">प्रतिस्पर्धियों के बारे में शोध करें</span>
+                <i class="fas fa-info-circle text-gray-400 hover:text-blue-500 cursor-pointer"></i>
+            </li>
+            <li class="task-item flex items-center bg-gray-50 hover:bg-gray-100 p-4 rounded-lg shadow-sm border-l-4 border-purple-400 transition-all duration-200">
+                <input type="checkbox" class="mr-3 w-5 h-5 accent-green-500 cursor-pointer" onclick="updateProgress()">
+                <span class="text-gray-700 flex-grow hindi-text" data-hindi="ग्राहक सहभागिता में सुधार करें" data-english="Improve customer engagement">ग्राहक सहभागिता में सुधार करें</span>
+                <i class="fas fa-info-circle text-gray-400 hover:text-blue-500 cursor-pointer"></i>
+            </li>
+            <li class="task-item flex items-center bg-gray-50 hover:bg-gray-100 p-4 rounded-lg shadow-sm border-l-4 border-green-400 transition-all duration-200">
+                <input type="checkbox" class="mr-3 w-5 h-5 accent-green-500 cursor-pointer" onclick="updateProgress()">
+                <span class="text-gray-700 flex-grow hindi-text" data-hindi="बिक्री के रुझान का विश्लेषण करें" data-english="Analyze sales trends">बिक्री के रुझान का विश्लेषण करें</span>
+                <i class="fas fa-info-circle text-gray-400 hover:text-blue-500 cursor-pointer"></i>
+            </li>
+            <li class="task-item flex items-center bg-gray-50 hover:bg-gray-100 p-4 rounded-lg shadow-sm border-l-4 border-yellow-400 transition-all duration-200">
+                <input type="checkbox" class="mr-3 w-5 h-5 accent-green-500 cursor-pointer" onclick="updateProgress()">
+                <span class="text-gray-700 flex-grow hindi-text" data-hindi="मार्केटिंग रणनीति अपडेट करें" data-english="Update marketing strategy">मार्केटिंग रणनीति अपडेट करें</span>
+                <i class="fas fa-info-circle text-gray-400 hover:text-blue-500 cursor-pointer"></i>
+            </li>
+            <li class="task-item flex items-center bg-gray-50 hover:bg-gray-100 p-4 rounded-lg shadow-sm border-l-4 border-red-400 transition-all duration-200">
+                <input type="checkbox" class="mr-3 w-5 h-5 accent-green-500 cursor-pointer" onclick="updateProgress()">
+                <span class="text-gray-700 flex-grow hindi-text" data-hindi="वित्तीय रिपोर्ट की समीक्षा करें" data-english="Review financial reports">वित्तीय रिपोर्ट की समीक्षा करें</span>
+                <i class="fas fa-info-circle text-gray-400 hover:text-blue-500 cursor-pointer"></i>
+            </li>
+            <li class="task-item flex items-center bg-gray-50 hover:bg-gray-100 p-4 rounded-lg shadow-sm border-l-4 border-indigo-400 transition-all duration-200">
+                <input type="checkbox" class="mr-3 w-5 h-5 accent-green-500 cursor-pointer" onclick="updateProgress()">
+                <span class="text-gray-700 flex-grow hindi-text" data-hindi="टीम प्रदर्शन मूल्यांकन" data-english="Evaluate team performance">टीम प्रदर्शन मूल्यांकन</span>
+                <i class="fas fa-info-circle text-gray-400 hover:text-blue-500 cursor-pointer"></i>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- Settings Panel -->
+    <div id="settingsPanel" class="settings-panel fixed top-0 left-0 w-full sm:w-96 h-full bg-white shadow-2xl z-20 p-6 flex flex-col">
+        <div class="flex justify-between items-center mb-6 pb-3 border-b">
+            <h2 class="text-xl font-bold text-gray-800 hindi-text" data-hindi="सेटिंग्स" data-english="Settings">सेटिंग्स</h2>
+            <button id="closeSettings" class="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="space-y-4">
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-bell text-blue-600"></i>
+                    </div>
+                    <span class="hindi-text" data-hindi="नोटिफिकेशन" data-english="Notifications">नोटिफिकेशन</span>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" value="" class="sr-only peer" checked>
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+            </div>
+            
+            
+            
+            <button id="translateBtn" class="translate-btn flex items-center justify-center p-3">
+                <i class="fas fa-language mr-2"></i>
+                <span class="hindi-text" data-hindi="अंग्रेजी में अनुवाद करें" data-english="Translate to Hindi">अंग्रेजी में अनुवाद करें</span>
+            </button>
+            
+            <div class="pt-4 border-t mt-4">
+                <button class="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition duration-300 hindi-text"
+                        data-hindi="लॉग आउट" data-english="Log Out">लॉग आउट</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom Navigation -->
+    <div class="flex justify-around py-4 bg-gradient-to-r from-[#2E3255] to-[#4A4F7A] rounded-t-2xl shadow-lg mt-4 text-white">
+        <button onclick="window.location.href='dashboard.html'" class="nav-button font-semibold flex flex-col items-center transition-all duration-200">
+            <i class="fas fa-home text-xl mb-1"></i>
+            <span class="text-xs hindi-text" data-hindi="होम" data-english="Home">होम</span>
+        </button>
+        <button onclick="window.location.href='progress.html'" class="nav-button font-semibold flex flex-col items-center transition-all duration-200">
+            <i class="fas fa-chart-line text-xl mb-1"></i>
+            <span class="text-xs hindi-text" data-hindi="प्रगति" data-english="Progress">प्रगति</span>
+        </button>
+        <button id="settingsBtn" class="nav-button font-semibold flex flex-col items-center transition-all duration-200">
+            <i class="fas fa-cog text-xl mb-1"></i>
+            <span class="text-xs hindi-text" data-hindi="सेटिंग्स" data-english="Settings">सेटिंग्स</span>
+        </button>
+    </div>
+    
+    <script>
+        let isEnglish = false;
+        
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('#task-list input[type="checkbox"]');
+            const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const totalTasks = checkboxes.length;
+            const percentage = Math.round((checkedCount / totalTasks) * 100);
+            
+            // Update progress bar
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = `${percentage}%`;
+            
+            // Update progress text
+            const progressText = document.getElementById('progress-text');
+            progressText.textContent = isEnglish ? `${percentage}% Complete` : `${percentage}% पूर्ण`;
+            
+            // Update task counter
+            const taskCounter = document.getElementById('task-count');
+            taskCounter.textContent = isEnglish ? `${checkedCount}/${totalTasks} Complete` : `${checkedCount}/${totalTasks} पूर्ण`;
+            taskCounter.className = `text-sm px-2 py-1 rounded-full ${
+                checkedCount === totalTasks ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
+            }`;
+            
+            // Add celebration when all tasks are completed
+            if (checkedCount === totalTasks) {
+                progressText.classList.add('animate-pulse');
+                setTimeout(() => progressText.classList.remove('animate-pulse'), 2000);
+            }
+        }
+        
+        // Add click event for info icons
+        document.querySelectorAll('.fa-info-circle').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const taskText = this.parentElement.querySelector('span').textContent;
+                alert(isEnglish ? 
+                    `Details for: ${taskText}\n\nTask details will be shown here.` : 
+                    `विवरण: ${taskText}\n\nकार्य विवरण यहां दिखाया जाएगा।`);
+            });
+        });
+        
+        // Settings functionality
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsPanel = document.getElementById('settingsPanel');
+        const closeSettings = document.getElementById('closeSettings');
+        
+        settingsBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            settingsPanel.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeSettings.addEventListener('click', () => {
+            settingsPanel.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        // Translation functionality
+        const translateBtn = document.getElementById('translateBtn');
+        
+        translateBtn.addEventListener('click', () => {
+            const hindiElements = document.querySelectorAll('.hindi-text');
+            isEnglish = !isEnglish;
+            
+            hindiElements.forEach(element => {
+                const hindiText = element.getAttribute('data-hindi');
+                const englishText = element.getAttribute('data-english');
+                
+                if (element.innerHTML.includes('<') || element.innerHTML.includes('>')) {
+                    // Handle HTML content
+                    element.innerHTML = isEnglish ? englishText : hindiText;
+                } else {
+                    // Handle plain text
+                    element.textContent = isEnglish ? englishText : hindiText;
+                }
+            });
+            
+            // Update translate button text
+            const translateBtnText = translateBtn.querySelector('span');
+            translateBtnText.setAttribute('data-hindi', isEnglish ? "हिंदी में अनुवाद करें" : "अंग्रेजी में अनुवाद करें");
+            translateBtnText.setAttribute('data-english', isEnglish ? "Translate to Hindi" : "Translate to English");
+            translateBtnText.textContent = isEnglish ? "Translate to Hindi" : "अंग्रेजी में अनुवाद करें";
+            
+            // Update progress and task count after translation
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
