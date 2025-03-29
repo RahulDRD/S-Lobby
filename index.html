@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Potential - Sign Up / Login</title>
+    <title>Lobby - Sign Up / Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
@@ -22,238 +22,119 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
         .input-focus:focus {
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 0 3px rgba(146, 198, 231, 0.4);
         }
-        .translate-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-            background-color: #3b82f6;
-            color: white;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        .translate-btn:hover {
-            transform: scale(1.1);
-            background-color: #2563eb;
-        }
+
     </style>
 </head>
-<body class="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 px-4 py-6 font-sans">
-
-    <!-- Translate Button -->
-    <div class="translate-btn" id="translateBtn" title="Translate to English">
-        <i class="fas fa-language text-xl"></i>
-    </div>
+<body class="flex flex-col min-h-screen bg-gradient-to-br from-[#AD49E1] to-[#6EACDA] px-4 py-6 font-sans text-white">
 
     <!-- Heading -->
-    <div class="text-center mt-15 mb-8">
-        <h1 class="text-3xl font-bold text-[#2E3255] leading-tight hindi-text" 
-            data-hindi="अपने व्यापार की<br><span class='text-blue-600'>संभावनाओं को</span><span class='block'>उजागर करें</span>"
-            data-english="Unlock Your<br><span class='text-blue-600'>Business</span><span class='block'>Potential</span>">
-            अपने व्यापार की<br> 
-            <span class="text-blue-600">संभावनाओं को</span> 
-            <span class="block">उजागर करें</span>
-        </h1>
-        <p class="text-gray-600 mt-2 hindi-text" 
-           data-hindi="व्यवसाय विश्लेषण के लिए अपना खाता बनाएं या लॉगिन करें"
-           data-english="Create your account or login for business analysis">
-           व्यवसाय विश्लेषण के लिए अपना खाता बनाएं या लॉगिन करें
-        </p>
+    <div class="text-center mt-8 mb-8">
+        <div class="flex items-center justify-center">
+            <img src="/logo2.png" class="h-12 w-12 mr-1">
+            <h1 class="text-4xl font-bold leading-tight">
+                Lobby
+            </h1>
+        </div>
     </div>
 
     <!-- Main Card -->
     <div class="flex-grow flex items-center justify-center pb-16">
-        <div class="w-full max-w-md card-hover">
-            <div class="bg-white px-8 py-8 rounded-3xl shadow-xl relative overflow-hidden">
+        <div class="w-full max-w-full card-hover">
+            <div class="bg-white/10 mt-16 backdrop-blur-sm px-8 py-8 rounded-[50px] shadow-xl relative overflow-hidden border border-white/20">
                 <!-- Decorative elements -->
-                <div class="absolute -top-20 -right-20 w-40 h-40 bg-blue-100 rounded-full opacity-20"></div>
-                <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-purple-100 rounded-full opacity-20"></div>
+                <div class="absolute -top-20 -right-20 w-40 h-40 bg-white/10 rounded-full opacity-20"></div>
+                <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-white/10 rounded-full opacity-20"></div>
                       
-                <h2 class="text-xl font-bold text-center text-gray-800 mb-6 hindi-text"
-                    data-hindi="साइन अप / लॉगिन करें"
-                    data-english="Sign Up / Login">
-                    साइन अप / लॉगिन करें
+                <h2 class="text-3xl font-bold text-center mt-8 mb-8">
+                    Welcome!
                 </h2>
                 
-                <form class="space-y-4">
+                <form class="space-y-6">
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1 hindi-text"
-                               data-hindi="ईमेल"
-                               data-english="Email">
-                               ईमेल
-                        </label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-envelope text-gray-400"></i>
+                                <i class="fas fa-user text-white/70"></i>
+                            </div>
+                            <input type="text" id="username" placeholder="Your username" 
+                                   class="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-full input-focus focus:outline-none text-white placeholder-white/70 transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-envelope text-white/70"></i>
                             </div>
                             <input type="email" id="email" placeholder="your@email.com" 
-                                   class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg input-focus focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition">
+                                   class="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-full input-focus focus:outline-none text-white placeholder-white/70 transition">
                         </div>
                     </div>
                     
                     <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1 hindi-text"
-                               data-hindi="पासवर्ड"
-                               data-english="Password">
-                               पासवर्ड
-                        </label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-lock text-gray-400"></i>
+                                <i class="fas fa-lock text-white/70"></i>
                             </div>
                             <input type="password" id="password" placeholder="••••••••" 
-                                   class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg input-focus focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition">
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-                            <label for="remember-me" class="ml-2 block text-sm text-gray-700 hindi-text"
-                                   data-hindi="मुझे याद रखें"
-                                   data-english="Remember me">
-                                   मुझे याद रखें
-                            </label>
-                        </div>
-                        <div class="text-sm">
-                            <a href="#" class="font-medium text-blue-600 hover:text-blue-500 hindi-text"
-                               data-hindi="पासवर्ड भूल गए?"
-                               data-english="Forgot password?">
-                               पासवर्ड भूल गए?
-                            </a>
+                                   class="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-full input-focus focus:outline-none text-white placeholder-white/70 transition">
                         </div>
                     </div>
                     
                     <button type="button" onclick="window.location.href='introduction.html'" 
-                            class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-300 transform hover:scale-105">
-                        <span class="hindi-text" data-hindi="लॉगिन करें" data-english="Login">लॉगिन करें</span>
+                            class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-full shadow-lg text-lg font-medium text-[#1c4d70] bg-white hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white transition-all duration-300 transform hover:scale-[1.02]">
+                        <span>Login</span>
                         <i class="fas fa-arrow-right ml-2"></i>
                     </button>
                 </form>
                 
-                <div class="mt-6">
+                <div class="mt-8">
                     <div class="relative">
                         <div class="absolute inset-0 flex items-center">
-                            <div class="w-full border-t border-gray-300"></div>
+                            <div class="w-full border-t border-white/30"></div>
                         </div>
                         <div class="relative flex justify-center text-sm">
-                            <span class="px-2 bg-white text-gray-500 hindi-text"
-                                  data-hindi="या"
-                                  data-english="or">
-                                  या
+                            <span class="px-3 bg-transparent text-white/70">
+                                Or continue with
                             </span>
                         </div>
                     </div>
                     
-                    <div class="mt-4 grid grid-cols- gap-3">
-                        <button type="button" class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            <i class="fab fa-google text-red-500 mr-2"></i>
+                    <div class="mt-6 grid grid-cols-1 gap-3">
+                        <button type="button" class="w-full inline-flex justify-center items-center py-3 px-4 border border-white/30 rounded-full shadow-sm bg-white/5 text-sm font-medium text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/50 transition">
+                            <img src="/google.png" class="w-5 h-5 mr-3"> 
                             Google
                         </button>
                     </div>
                 </div>
                 
-                <p class="text-gray-600 text-sm mt-6 text-center hindi-text"
-                   data-hindi="नए उपयोगकर्ता? <a href='dashboard.html' class='font-medium text-blue-600 hover:text-blue-500'>अभी साइन अप करें</a>"
-                   data-english="New user? <a href='dashboard.html' class='font-medium text-blue-600 hover:text-blue-500'>Sign up now</a>">
-                   नए उपयोगकर्ता? 
-                   <a href="introduction.html" class="font-medium text-blue-600 hover:text-blue-500 hindi-text"
-                      data-hindi="अभी साइन अप करें"
-                      data-english="Sign up now">
-                      अभी साइन अप करें
-                   </a>
+                <p class="text-white/80 text-sm mt-8 text-center">
+                    New user? 
+                    <a href="introduction.html" class="font-medium text-white hover:text-white underline">
+                        Sign up now
+                    </a>
                 </p>
             </div>
         </div>
     </div>
 
     <script>
-        let isEnglish = false;
-        
-        // Toggle translation between Hindi and English
-        function toggleTranslation() {
-            const hindiElements = document.querySelectorAll('.hindi-text');
-            const translateBtn = document.getElementById('translateBtn');
-            
-            isEnglish = !isEnglish;
-            
-            hindiElements.forEach(element => {
-                if (element.hasAttribute('data-hindi') && element.hasAttribute('data-english')) {
-                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                        // Handle input placeholders
-                        const hindiPlaceholder = element.getAttribute('data-hindi-placeholder');
-                        const englishPlaceholder = element.getAttribute('data-english-placeholder');
-                        if (hindiPlaceholder && englishPlaceholder) {
-                            element.setAttribute('placeholder', isEnglish ? englishPlaceholder : hindiPlaceholder);
-                        }
-                    } else {
-                        // Handle regular text content
-                        if (element.innerHTML.includes('<') || element.innerHTML.includes('>')) {
-                            // Handle HTML content
-                            const hindiContent = element.getAttribute('data-hindi');
-                            const englishContent = element.getAttribute('data-english');
-                            element.innerHTML = isEnglish ? englishContent : hindiContent;
-                        } else {
-                            // Handle plain text
-                            const hindiText = element.getAttribute('data-hindi');
-                            const englishText = element.getAttribute('data-english');
-                            element.textContent = isEnglish ? englishText : hindiText;
-                        }
-                    }
-                }
-            });
-            
-            // Update button icon and title
-            translateBtn.title = isEnglish ? "Translate to Hindi" : "Translate to English";
-            translateBtn.innerHTML = '<i class="fas fa-language text-xl"></i>';
-            
-            // Update alert messages
-            const alertMessages = {
-                hindi: 'कृपया ईमेल और पासवर्ड दर्ज करें',
-                english: 'Please enter email and password'
-            };
-            
-            // Update form validation message (this would be used in the form validation function)
-            window.currentAlertMessage = isEnglish ? alertMessages.english : alertMessages.hindi;
-        }
-        
         // Add simple form validation
         document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault();
+            const username = document.getElementById('username').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             
-            if (!email || !password) {
-                alert(isEnglish ? 'Please enter email and password' : 'कृपया ईमेल और पासवर्ड दर्ज करें');
+            if (!username || !email || !password) {
+                alert('Please fill in all fields');
                 return;
             }
             
             // Simulate successful login
             window.location.href = 'dashboard.html';
         });
-        
-        // Add hover effects to social buttons
-        const socialButtons = document.querySelectorAll('[class*="fa-google"], [class*="fa-facebook"]');
-        socialButtons.forEach(button => {
-            button.parentElement.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-2px)';
-            });
-            button.parentElement.addEventListener('mouseleave', function() {
-                this.style.transform = '';
-            });
-        });
-        
-        // Initialize translation button
-        document.getElementById('translateBtn').addEventListener('click', toggleTranslation);
     </script>
 </body>
 </html>
